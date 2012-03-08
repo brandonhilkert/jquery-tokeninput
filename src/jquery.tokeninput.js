@@ -40,6 +40,7 @@ var DEFAULT_SETTINGS = {
     tokenDelimiter: ",",
     preventDuplicates: false,
     tokenValue: "id",
+    allowFreeFormTokens: false,
 
     // Callbacks
     onResult: null,
@@ -276,11 +277,18 @@ $.TokenList = function (input, url_or_data, settings) {
                 case KEY.ENTER:
                 case KEY.NUMPAD_ENTER:
                 case KEY.COMMA:
+                  var input_value = $(this).val();
+
                   if(selected_dropdown_item) {
                     add_token($(selected_dropdown_item).data("tokeninput"));
                     hidden_input.change();
                     return false;
+                  } else if (settings.allowFreeFormTokens && input_value) {
+                    add_token({id: input_value, name: input_value})
+                    hidden_input.change();
+                    return false;
                   }
+
                   break;
 
                 case KEY.ESCAPE:
@@ -751,6 +759,7 @@ $.TokenList = function (input, url_or_data, settings) {
                 dropdown.html("<p>"+settings.noResultsText+"</p>");
                 show_dropdown();
             }
+            selected_dropdown_item = null;
         }
     }
 
