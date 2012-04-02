@@ -500,11 +500,9 @@ $.TokenList = function (input, url_or_data, settings) {
             .addClass(settings.classes.tokenDelete)
             .appendTo(this_token)
             .click(function () {
-                if (!settings.disabled) {
-                    delete_token($(this).parent());
-                    hidden_input.change();
-                    return false;
-                }
+                delete_token($(this).parent());
+                hidden_input.change();
+                return false;
             });
 
         // Store data on the token
